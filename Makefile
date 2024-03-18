@@ -14,11 +14,11 @@
 NAME =	libft.a 	# Nombre de la biblioteca estatica
 CC =	gcc		# Esto asigna el compilador que se utilizará en el Makefile. 
 CFLAGS =	-Wall -Wextra -Werror -I.	# '-I.' agrega el directorio actual al camino de búsqueda de inclusión, lo que significa que el compilador buscará archivos de encabezado también en el directorio actual.
-AR =	ar rc	# 'ar' es una utilidad de Unix para manipular archivos de biblioteca. En conjunto, ar rc se utiliza para crear o actualizar un archivo de biblioteca estática. 
+AR =	ar rcs	# 'ar' es una utilidad de Unix para manipular archivos de biblioteca. En conjunto, ar rc se utiliza para crear o actualizar un archivo de biblioteca estática. 
 RM =	rm -f	# variable que asigna el comando que se utilizará para eliminar archivos.
 
 # Files
-SRC =	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c	# Variable que contiene una lista de archivos o funciones.  
+SRC =	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_strlen.c ft_memset.c	# Variable que contiene una lista de archivos o funciones.  
 
 OBJS =	$(SRC:.c=.o)	# Variable  que utiliza una regla de sustitución de patrones para reemplazar la extensión ".c" por ".o" en cada uno de los nombres de archivo en la variable SRCS. 
 
@@ -27,16 +27,21 @@ OBJS =	$(SRC:.c=.o)	# Variable  que utiliza una regla de sustitución de patrone
 
 #1 Esta regla se utiliza para compilar todo el proyecto. Solo compila lo requerido inicialmente.
 
-# rcs' son las opciones utilizadas con 'ar':
+#'rcs' son las opciones utilizadas con 'ar':
 #'r': Agrega o reemplaza archivos en la biblioteca.
 #'c': Crea la biblioteca si no existe.
 #'s': Crea un índice para la biblioteca, lo que puede mejorar el rendimiento en algunas situaciones.
+#'$(NAME):' Crear el ejecutable.
+#'%.o : %.c' Regla patron que permite generar un archivo .o apartir de un archivo .c con las flags requeridas.
+#'$< $@' Variables automaticas. Usaría '$@' para el nombre del archivo objeto y '$<' para el nombre del archivo fuente.
 
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
-			ar rcs $(NAME) $(OBJS)
+			$(AR) $(NAME) $(OBJS)
 
+%.o : %.c 
+		$(CC) -c $(CFLAGS) $< -o $@
 
 #2 Esta regla se utiliza para limpiar los archivos generados por la compilación (.o).
 clean:
