@@ -34,6 +34,16 @@ int	main(void)
 
     ft_isprint
     printf("El resultado: %d\n", ft_isprint(198));
-*/
+
+    ft_strlen
+    char *c = "hola";
+    printf("El resultado: %zu\n", ft_strlen("holaaa1234"));
+
+    ft_memset
+    char buffer[40];
+    ft_memset(buffer, 'X', 2);
+    printf("El resultado: %s\n", buffer);
+*/    
+
 	return (0);
 }
